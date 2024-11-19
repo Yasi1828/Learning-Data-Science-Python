@@ -14,6 +14,18 @@ webpage = requests.get(url,headers=HEADERS)
 soup = BeautifulSoup(webpage.content,'html.parser')
 Title = soup.find('span',attrs={'id':'productTitle'})
 Title_string =Title.string.strip().replace(',','')
+File.write(f"{Title_string},\n")
+WholePrice = soup.find('span',attrs={'class':'a-price-whole'})
+File.write(f"{WholePrice},\n")
+Rate = soup.find('span',attrs={'data-hook':'rating-out-of-text'}).string
+File.write(f"{Rate},\n")
+Reviewcount = soup.find('span',attrs={'data-hook':'total-review-count'}).string.replace(',','')
+File.write(f"{Reviewcount},\n")
+print(WholePrice)
+print(Title_string)
+print(Rate)
+print(Reviewcount)
+
 
 
     
