@@ -13,9 +13,7 @@ url ='https://www.amazon.com/Travelers-Club-Luggage-Piece-Rose/dp/B07RS4PK3J/ref
 webpage = requests.get(url,headers=HEADERS)
 soup = BeautifulSoup(webpage.content,'html.parser')
 Title = soup.find('span',attrs={'id':'productTitle'})
-Title_string =Title.string.strip().replace(',','')
-
-
+print(Title.string) 
     
     
     
