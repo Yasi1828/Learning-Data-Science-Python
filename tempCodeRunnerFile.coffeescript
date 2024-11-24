@@ -1,0 +1,30 @@
+import requests
+from bs4 import BeautifulSoup
+
+# URL of the job search page
+url = "https://www.indeed.com/jobs?q=data+science+internship&l=Geneva%2C+NY&from=searchOnDesktopSerp&vjk=dca023dc428ce6a7"
+
+# Send a GET request to the URL
+response = requests.get(url)
+
+# Check if the request was successful
+if response.status_code == 200:
+    # Parse the HTML content
+    soup = BeautifulSoup(response.text, 'html.parser')
+
+    # Find job postings
+    job_cards = soup.find_all('div', class_='job_seen_beacon')
+
+    # Loop through job cards and extract details
+    for job in job_cards:
+        title = job.find('h2', class_='jobTitle')
+        link = job.find('a')
+
+        if title and link:
+            job_title = title.get_text(strip=True)
+            job_link = "https://www.indeed.com" + link['href']
+
+            print(f"Job Title: {job_title}")
+            print(f"Job Link: {job_link}\n")
+else:
+    print(f"Failed to retrieve jobs. Status code: {response.status_code}")
